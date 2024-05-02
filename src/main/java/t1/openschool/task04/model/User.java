@@ -1,5 +1,6 @@
 package t1.openschool.task04.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -20,6 +21,7 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     private String id;
+    @Column(unique = true)
     private String login;
     private String password;
     private String name;

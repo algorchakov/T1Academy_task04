@@ -24,13 +24,13 @@ public class SecurityController {
     }
 
     @PostMapping("/token")
-    public ResponseEntity<TokenResponse> getAccessToken(RefreshTokenRequest tokenRequest) {
+    public ResponseEntity<TokenResponse> getAccessToken(@RequestBody RefreshTokenRequest tokenRequest) {
         final TokenResponse token = securityService.getAccessToken(tokenRequest.getRefreshToken());
         return ResponseEntity.ok(token);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<TokenResponse> refreshToken(RefreshTokenRequest tokenRequest) {
+    public ResponseEntity<TokenResponse> refreshToken(@RequestBody RefreshTokenRequest tokenRequest) {
         final TokenResponse token = securityService.refreshToken(tokenRequest.getRefreshToken());
         return ResponseEntity.ok(token);
     }

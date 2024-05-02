@@ -5,11 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-<<<<<<< HEAD
-import t1.openschool.task04.exeption.AuthException;
-=======
 import t1.openschool.task04.exception.AuthException;
->>>>>>> 81de080... commit #1
 import t1.openschool.task04.model.JwtAuthentication;
 import t1.openschool.task04.model.User;
 import t1.openschool.task04.model.dto.PasswordTokenRequest;
@@ -60,7 +56,7 @@ public class SecurityService {
             final String accessToken = tokenService.generateAccessToken(user);
             final String newRefreshToken = tokenService.generateRefreshToken(user);
             refreshTokenMap.put(user.getLogin(), newRefreshToken);
-            return new TokenResponse(accessToken, null);
+            return new TokenResponse(accessToken, newRefreshToken);
         }
         throw new AuthException("Invalid token");
     }
