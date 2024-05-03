@@ -1,0 +1,198 @@
+openapi: "3.0.0"
+info:
+  title: "OpenAPI спецификация учебного проекта №4 @T1Academy"
+  description: "Spring Security & JWT"
+  version: "0.0.1"
+servers:
+  - url: http://localhost:8080/
+    description: "Dev server"
+paths:
+  /api/auth/login:
+    post:
+      summary: "Метод аутентификации пользователя"
+      operationId: "login"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PasswordTokenRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntityLogin"
+        "403":
+          description: "Invalid password"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+
+  /api/auth/refresh:
+    post:
+      summary: "Метод получения новых access и refresh токенов"
+      operationId: "refreshToken"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+  
+  /api/auth/token:
+    post:
+      summary: "Метод получения access токена"
+      operationId: "getAccessToken"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+  
+  /api/public/user:
+    post:
+      summary: "Метод создания и записи нового пользователя"
+      operationId: "createUser"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequestDTO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+  
+  /api/user:
+    get:
+      summary: "Метод проверки прав пользователя с ролью User"
+      operationId: "user"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json;charset=UTF-8:
+                schema:
+                  $ref: "#/components/schemas/ResponseEntityUser"
+        "500":
+          description: "Invalid token"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+
+  /api/admin:
+    get:
+      summary: "Метод проверки прав пользователя с ролью Admin"
+      operationId: "admin"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntityAdmin"
+        "500":
+          description: "Invalid token"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+
+components:
+  schemas:
+    UserRequestDTO:
+      type: "object"
+      required:
+      - login
+      - password
+      - name
+      - roles
+      properties:
+        login:
+          type: "string"
+          example: "login123"
+        password:
+          type: "string"
+          example: "password123"
+        name:
+          type: "string"
+          example: "Firstname"
+        roles:
+          type: "array"
+          items:
+            type: "string"
+            example: "USER"
+            
+    PasswordTokenRequest:
+      type: "object"
+      required:
+      - login
+      - password
+      properties:
+        login:
+          type: "string"
+          example: "login123"
+        password:
+          type: "string"
+          example: "password123"
+          
+    TokenResponse:
+      type: "object"
+      properties:
+        accessToken:
+          type: "string"
+        refreshToken:
+          type: "string"
+          
+    HttpHeaders:
+      type: "object"
+      properties: { }
+      
+    ResponseEntity:
+      type: "object"
+      properties:
+        headers:
+          $ref: "#/components/schemas/HttpHeaders"
+    
+    ResponseEntityLogin:
+      type: "object"
+      properties:
+        headers:
+          $ref: "#/components/schemas/HttpHeaders"
+        body:
+          $ref: "#/components/schemas/TokenResponse"
+          
+    ResponseEntityUser:
+      type: "object"
+      properties:
+        headers:
+          $ref: "#/components/schemas/HttpHeaders"
+        body: 
+          $ref: "#/components/schemas/UserResponse"
+    
+    UserResponse:
+      type: "string"
+      example: "User Petr is logged in"
+          
+    ResponseEntityAdmin:
+      type: "object"
+      properties:
+        headers:
+          $ref: "#/components/schemas/HttpHeaders"
+        body: 
+          $ref: "#/components/schemas/AdminResponse"
+    
+    AdminResponse:
+      type: "string"
+      example: "Admin Petr is logged in"
