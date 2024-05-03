@@ -19,6 +19,6 @@ public class AdminController {
     @GetMapping
     public ResponseEntity<String> admin() {
         final JwtAuthentication authInfo = securityService.getAuthInfo();
-        return ResponseEntity.ok("Admin " + authInfo.getName());
+        return ResponseEntity.ok("Admin " + authInfo.getName() + " is logged in");
     }
 }

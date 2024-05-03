@@ -20,6 +20,6 @@ public class UserController {
     @GetMapping
     public ResponseEntity<String> user() {
         final JwtAuthentication authInfo = securityService.getAuthInfo();
-        return ResponseEntity.ok("User " + authInfo.getName());
+        return ResponseEntity.ok("User " + authInfo.getName() + " is logged in");
     }
 }
