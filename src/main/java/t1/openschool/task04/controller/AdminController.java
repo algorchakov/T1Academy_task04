@@ -10,12 +10,12 @@ import t1.openschool.task04.model.JwtAuthentication;
 import t1.openschool.task04.service.SecurityService;
 
 @Controller
-@RequestMapping("api/admin")
+@RequestMapping("/api/admin")
 @RequiredArgsConstructor
 public class AdminController {
     private final SecurityService securityService;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<String> admin() {
         final JwtAuthentication authInfo = securityService.getAuthInfo();

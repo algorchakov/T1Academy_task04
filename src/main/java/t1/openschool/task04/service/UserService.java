@@ -1,8 +1,7 @@
 package t1.openschool.task04.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import t1.openschool.task04.model.User;
@@ -25,11 +24,6 @@ public class UserService {
 
     public User getByLogin(String login) {
         return userRepository.findByLogin(login)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
-
-    public UserDetailsService userDetailsService() {
-        return this::getByLogin;
-    }
-
 }

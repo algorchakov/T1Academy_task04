@@ -18,3 +18,9 @@ jwt:
   secret: secretkeyhellosecretkey123secretkeyhellosecretkey123
   tokenExpiration: 5m
   refreshTokenExpiration: 30m
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
